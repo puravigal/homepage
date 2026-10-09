@@ -16,6 +16,15 @@ Puravigal is being developed as a broader business software platform. Additional
 - https://www.puravigal.com/pos/pricing.html
 - https://www.puravigal.com/pos/industries/
 - https://www.puravigal.com/pos/resources.html
+- https://www.puravigal.com/pos/resources/choose-pos-software.html
+- https://www.puravigal.com/pos/resources/retail-billing-inventory-checklist.html
+- https://www.puravigal.com/pos/resources/restaurant-cafe-pos-checklist.html
+- https://www.puravigal.com/pos/industries/retail.html
+- https://www.puravigal.com/pos/industries/restaurant.html
+- https://www.puravigal.com/pos/industries/cafe.html
+- https://www.puravigal.com/pos/industries/mobile-shop.html
+- https://www.puravigal.com/pos/industries/supermarket.html
+- https://www.puravigal.com/pos/industries/grocery.html
 - https://www.puravigal.com/business-types.html
 - https://www.puravigal.com/about-us.html
 - https://www.puravigal.com/contact.html
