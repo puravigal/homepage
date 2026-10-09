@@ -1,0 +1,33 @@
+# Puravigal
+
+> Puravigal is building practical SaaS software for micro and small businesses. Puravigal POS is the first product being released.
+
+## Current product
+- Puravigal POS: billing, products, inventory, purchases, customers, suppliers, reports and returns for small businesses.
+- Business verticals: retail shops, restaurants, cafés, mobile shops, supermarkets and grocery/provision stores.
+
+## Platform vision
+Puravigal is being developed as a broader business software platform. Additional products and connected capabilities may be introduced over time as they are developed and released. Future ideas should not be treated as currently available products.
+
+## Official pages
+- https://www.puravigal.com/
+- https://www.puravigal.com/pos/
+- https://www.puravigal.com/pos/features.html
+- https://www.puravigal.com/pos/pricing.html
+- https://www.puravigal.com/pos/industries/
+- https://www.puravigal.com/pos/resources.html
+- https://www.puravigal.com/business-types.html
+- https://www.puravigal.com/about-us.html
+- https://www.puravigal.com/contact.html
+- https://www.puravigal.com/privacy-policy.html
+- https://www.puravigal.com/terms-and-conditions.html
+
+## Account
+- https://www.puravigal.com/login.html
+- https://www.puravigal.com/signup.html
+- https://www.puravigal.com/pos/login.html
+- https://www.puravigal.com/pos/signup.html
+
+## Contact
+sales@puravigal.com
+support@puravigal.com

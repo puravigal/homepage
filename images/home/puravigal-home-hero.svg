@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 700" role="img" aria-labelledby="title desc">
+<title id="title">Puravigal business platform dashboard</title>
+<desc id="desc">A modern business software dashboard with POS, CRM, ERP and business insights cards.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#eef4ff"/><stop offset=".55" stop-color="#fff"/><stop offset="1" stop-color="#fff0f8"/></linearGradient>
+  <linearGradient id="brand" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#235BDE"/><stop offset="1" stop-color="#E60063"/></linearGradient>
+  <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#263858" flood-opacity=".12"/></filter>
+  <filter id="soft" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="10" stdDeviation="15" flood-color="#52627c" flood-opacity=".1"/></filter>
+</defs>
+<rect width="980" height="700" rx="34" fill="url(#bg)"/>
+<circle cx="780" cy="145" r="170" fill="#e9ddff" opacity=".32"/>
+<circle cx="850" cy="520" r="150" fill="#ffd9ed" opacity=".24"/>
+<g transform="translate(100 90) rotate(-2 390 260)" filter="url(#shadow)">
+  <rect width="690" height="455" rx="28" fill="#fff" stroke="#dfe5f0" stroke-width="2"/>
+  <rect width="690" height="58" rx="28" fill="#f7f9fc"/>
+  <rect y="30" width="690" height="28" fill="#f7f9fc"/>
+  <circle cx="28" cy="29" r="6" fill="#d4dbe7"/><circle cx="49" cy="29" r="6" fill="#d4dbe7"/><circle cx="70" cy="29" r="6" fill="#d4dbe7"/>
+  <rect x="22" y="82" width="130" height="345" rx="16" fill="#f8faff"/>
+  <rect x="40" y="105" width="94" height="34" rx="10" fill="#eaf0ff"/>
+  <rect x="53" y="116" width="48" height="7" rx="4" fill="#235BDE"/>
+  <rect x="48" y="165" width="70" height="8" rx="4" fill="#b9c2d1"/>
+  <rect x="48" y="198" width="82" height="8" rx="4" fill="#d0d6e1"/>
+  <rect x="48" y="231" width="66" height="8" rx="4" fill="#d0d6e1"/>
+  <rect x="48" y="264" width="78" height="8" rx="4" fill="#d0d6e1"/>
+  <rect x="48" y="297" width="57" height="8" rx="4" fill="#d0d6e1"/>
+  <text x="178" y="108" font-family="Inter,Arial,sans-serif" font-size="18" font-weight="700" fill="#111827">Business overview</text>
+  <text x="178" y="133" font-family="Inter,Arial,sans-serif" font-size="11" fill="#8a95a8">Everything important, in one place</text>
+  <g filter="url(#soft)">
+    <rect x="178" y="158" width="148" height="88" rx="16" fill="#fff" stroke="#e5eaf2"/>
+    <rect x="340" y="158" width="148" height="88" rx="16" fill="#fff" stroke="#e5eaf2"/>
+    <rect x="502" y="158" width="148" height="88" rx="16" fill="#fff" stroke="#e5eaf2"/>
+  </g>
+  <text x="196" y="185" font-family="Inter,Arial,sans-serif" font-size="11" fill="#8a95a8">Sales</text><text x="196" y="219" font-family="Inter,Arial,sans-serif" font-size="23" font-weight="800" fill="#111827">₹24,860</text>
+  <text x="358" y="185" font-family="Inter,Arial,sans-serif" font-size="11" fill="#8a95a8">Orders</text><text x="358" y="219" font-family="Inter,Arial,sans-serif" font-size="23" font-weight="800" fill="#111827">86</text>
+  <text x="520" y="185" font-family="Inter,Arial,sans-serif" font-size="11" fill="#8a95a8">Customers</text><text x="520" y="219" font-family="Inter,Arial,sans-serif" font-size="23" font-weight="800" fill="#111827">42</text>
+  <rect x="178" y="267" width="310" height="132" rx="18" fill="#fbfcff" stroke="#e5eaf2"/>
+  <text x="196" y="293" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="700" fill="#344054">Sales insights</text>
+  <polyline points="198,370 235,348 272,357 310,326 347,340 384,303 422,315 462,286" fill="none" stroke="url(#brand)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="198" y1="376" x2="462" y2="376" stroke="#e7ebf2"/>
+  <rect x="506" y="267" width="144" height="132" rx="18" fill="#fff" stroke="#e5eaf2"/>
+  <text x="524" y="293" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="700" fill="#344054">Quick actions</text>
+  <rect x="524" y="310" width="105" height="24" rx="8" fill="#eef4ff"/><text x="537" y="326" font-family="Inter,Arial,sans-serif" font-size="9" font-weight="700" fill="#235BDE">New bill</text>
+  <rect x="524" y="343" width="105" height="24" rx="8" fill="#fff0f8"/><text x="537" y="359" font-family="Inter,Arial,sans-serif" font-size="9" font-weight="700" fill="#E60063">Customers</text>
+  <rect x="524" y="376" width="105" height="8" rx="4" fill="#e4e8f0"/>
+</g>
+<g filter="url(#soft)">
+  <rect x="34" y="105" width="154" height="64" rx="18" fill="#fff" stroke="#e6eaf3"/>
+  <circle cx="64" cy="137" r="18" fill="#edf3ff"/><path d="M57 145v-12h14v12M54 134l10-9 10 9" fill="none" stroke="#235BDE" stroke-width="2.5" stroke-linecap="round"/>
+  <text x="91" y="134" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="800" fill="#235BDE">POS</text><text x="91" y="151" font-family="Inter,Arial,sans-serif" font-size="10" fill="#667085">Billing &amp; sales</text>
+</g>
+<g filter="url(#soft)">
+  <rect x="790" y="205" width="156" height="64" rx="18" fill="#fff" stroke="#e6eaf3"/>
+  <circle cx="821" cy="237" r="18" fill="#fff0f8"/><circle cx="816" cy="234" r="5" fill="none" stroke="#E60063" stroke-width="2.3"/><path d="M808 248c1-7 14-7 16 0M829 232c5-1 8 2 8 6M829 244c5 0 8 2 9 5" fill="none" stroke="#E60063" stroke-width="2.2" stroke-linecap="round"/>
+  <text x="848" y="234" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="800" fill="#E60063">Business data</text><text x="848" y="251" font-family="Inter,Arial,sans-serif" font-size="10" fill="#667085">Customers &amp; growth</text>
+</g>
+<g filter="url(#soft)">
+  <rect x="705" y="500" width="174" height="66" rx="18" fill="#fff" stroke="#e6eaf3"/>
+  <circle cx="738" cy="533" r="18" fill="#f1ebff"/><path d="M730 542v-15h6v15M738 542v-23h6v23M746 542v-30h6v30" fill="none" stroke="#7b4dff" stroke-width="2.4"/>
+  <text x="767" y="530" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="800" fill="#6b3df5">Operations</text><text x="767" y="547" font-family="Inter,Arial,sans-serif" font-size="10" fill="#667085">Operations &amp; scale</text>
+</g>
+<g transform="translate(725 340) rotate(7)" filter="url(#shadow)">
+  <rect width="150" height="278" rx="28" fill="#111827"/>
+  <rect x="8" y="10" width="134" height="258" rx="22" fill="#fff"/>
+  <rect x="22" y="34" width="106" height="32" rx="10" fill="#f3f6fb"/>
+  <text x="33" y="55" font-family="Inter,Arial,sans-serif" font-size="9" font-weight="800" fill="#111827">Puravigal</text>
+  <rect x="22" y="86" width="106" height="45" rx="12" fill="#eef4ff"/><text x="34" y="104" font-family="Inter,Arial,sans-serif" font-size="8" fill="#667085">Today</text><text x="34" y="120" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="800" fill="#235BDE">₹24,860</text>
+  <rect x="22" y="143" width="50" height="42" rx="10" fill="#f8f9fc"/><rect x="78" y="143" width="50" height="42" rx="10" fill="#f8f9fc"/>
+  <text x="30" y="160" font-family="Inter,Arial,sans-serif" font-size="7" fill="#667085">Orders</text><text x="30" y="176" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="800" fill="#111827">86</text>
+  <text x="86" y="160" font-family="Inter,Arial,sans-serif" font-size="7" fill="#667085">Stock</text><text x="86" y="176" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="800" fill="#111827">120</text>
+  <rect x="22" y="200" width="106" height="42" rx="12" fill="url(#brand)"/><text x="46" y="226" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="800" fill="#fff">View insights</text>
+</g>
+</svg>
