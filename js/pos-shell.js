@@ -20,7 +20,7 @@
         '<div class="pos-nav-dropdown" data-business-dropdown><a data-nav="business-types" class="pos-dropdown-trigger" href="' + local("pos/industries/") + '" aria-haspopup="true" aria-expanded="false">Business types <span class="dropdown-chevron" aria-hidden="true">⌄</span></a><div class="pos-dropdown-menu" aria-label="Business types"><a href="' + local("pos/industries/retail.html") + '">Retail</a><a href="' + local("pos/industries/restaurant.html") + '">Restaurant</a><a href="' + local("pos/industries/cafe.html") + '">Café</a><a href="' + local("pos/industries/mobile-shop.html") + '">Mobile shop</a><a href="' + local("pos/industries/supermarket.html") + '">Supermarket</a><a href="' + local("pos/industries/grocery.html") + '">Grocery / provision store</a></div></div>' +
         '<a data-nav="resources" href="' + local("pos/resources.html") + '">Resources</a>' +
         '<a href="https://pos.puravigal.com/">Log in</a>' +
-        '<a data-pos-cta class="product-nav-cta" href="https://pos.puravigal.com/?signup=true">Get Started Free</a>' +
+        '<a data-pos-cta class="product-nav-cta" href="https://pos.puravigal.com/?signup=true">Get Started</a>' +
       '</nav>' +
     '</div>';
 
@@ -107,20 +107,35 @@
     });
   }
 
-  var cta = header.querySelector("[data-pos-cta]");
-  if (cta) {
+  /* All product entry CTAs use the same session decision. A signed-in visitor
+     goes straight to the POS; a signed-out visitor goes to the signup screen. */
+  var signupUrl = "https://pos.puravigal.com/?signup=true";
+  var appUrl = "https://pos.puravigal.com/";
+  var ctas = Array.prototype.slice.call(document.querySelectorAll(
+    "[data-pos-cta], a[href*='pos.puravigal.com/?signup=true']"
+  ));
+  ctas.forEach(function (cta) {
+    cta.href = signupUrl;
+    cta.textContent = "Get Started";
+    cta.setAttribute("aria-label", "Get started with Puravigal POS");
+  });
+  if (ctas.length) {
     fetch("https://pos.puravigal.com/api/auth/status", {
-      method: "GET", credentials: "include", headers: { Accept: "application/json" }
+      method: "GET",
+      credentials: "include",
+      cache: "no-store",
+      headers: { Accept: "application/json" }
     }).then(function (response) {
       return response.ok ? response.json() : null;
     }).then(function (data) {
-      if (data && data.authenticated === true) {
-        cta.href = "https://pos.puravigal.com/";
-        cta.textContent = "Access Now";
-        cta.setAttribute("aria-label", "Access Puravigal POS");
-      }
+      var signedIn = !!(data && data.authenticated === true);
+      ctas.forEach(function (cta) {
+        cta.href = signedIn ? appUrl : signupUrl;
+        cta.textContent = signedIn ? "Access Now" : "Get Started";
+        cta.setAttribute("aria-label", signedIn ? "Access Puravigal POS" : "Get started with Puravigal POS");
+      });
     }).catch(function () {
-      /* Keep the signup CTA visible if session detection is blocked. */
+      /* Fail closed to signup when session status cannot be verified. */
     });
   }
 })();
