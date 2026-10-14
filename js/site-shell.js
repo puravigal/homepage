@@ -4,7 +4,7 @@
   if (!script) return;
   var root = new URL("../", script.src);
   function local(path) { return new URL(path, root).href; }
-  var accountsSignup = "https://puravigal-accounts.onrender.com/?mode=signup";
+  var accountsSignup = "https://puravigal-accounts.onrender.com/?mode=signup&redirect_to=https%3A%2F%2Fpos.puravigal.com%2Fsso%2Fcallback";
   var accountsSignin = "https://puravigal-accounts.onrender.com/?mode=signin";
 
   var header = document.createElement("header");
