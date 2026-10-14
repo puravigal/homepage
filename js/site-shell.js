@@ -115,7 +115,7 @@
     // Use the SSO callback on every CTA, including the already-signed-in case.
     ctaLinks.forEach(function (link) { link.href = accountsSignup; });
     // Until the cross-origin status check returns, avoid falsely claiming a signed-in state.
-    setCtaState(false);
+    setCtaState(authStatusKnown ? isAuthenticated : false);
   });
 
   // Keep legacy account links pointed at the central Puravigal Accounts service.
