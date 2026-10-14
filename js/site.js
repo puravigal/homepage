@@ -3,8 +3,8 @@ document.addEventListener('DOMContentLoaded',()=>{const b=document.querySelector
 document.addEventListener('DOMContentLoaded',()=>{const current=new URL(window.location.href);document.querySelectorAll('header nav a[href]').forEach(link=>{const raw=link.getAttribute('href');if(!raw||raw.startsWith('#')||raw.startsWith('mailto:')||raw.startsWith('tel:'))return;try{const target=new URL(raw,current);if(target.origin!==current.origin)return;const normalize=p=>p.endsWith('/')?p:p.substring(p.lastIndexOf('/')+1)==='index.html'?p.substring(0,p.lastIndexOf('/')+1):p;const same=normalize(current.pathname)===normalize(target.pathname);if(same){link.setAttribute('aria-current','page');link.classList.add('is-active')}else{link.removeAttribute('aria-current');link.classList.remove('is-active')}}catch(e){}});const menu=document.querySelector('.menu-btn');if(menu&&!menu.hasAttribute('aria-expanded'))menu.setAttribute('aria-expanded','false')});
 // All Puravigal marketing-site signup CTAs must use the central Accounts signup.
 document.addEventListener('DOMContentLoaded',()=>{
-  const accountsSignupUrl='https://puravigal-accounts.onrender.com/?mode=signup&redirect_to=https%3A%2F%2Fpos.puravigal.com%2Fsso%2Fcallback';
-  const accountsSigninUrl='https://puravigal-accounts.onrender.com/';
+  const accountsSignupUrl='https://accounts.puravigal.com/?mode=signup&redirect_to=https%3A%2F%2Fpos.puravigal.com%2Fsso%2Fcallback';
+  const accountsSigninUrl='https://accounts.puravigal.com/';
   document.querySelectorAll('a[href*="signup.html"], a[href*="signup=true"], a[href*="mode=signup"]').forEach(a=>{
     if(/get started|start free|sign up|signup|create account/i.test(a.textContent.trim())) a.href=accountsSignupUrl;
   });
