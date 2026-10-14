@@ -4,6 +4,8 @@
   if (!script) return;
   var root = new URL("../", script.src);
   function local(path) { return new URL(path, root).href; }
+  var accountsSignup = "https://puravigal-accounts.onrender.com/?mode=signup";
+  var accountsSignin = "https://puravigal-accounts.onrender.com/?mode=signin";
 
   var header = document.createElement("header");
   header.className = "site-header";
@@ -18,8 +20,7 @@
         '<a href="' + local("pos/") + '">POS</a>' +
         '<a href="' + local("about-us.html") + '">About</a>' +
         '<a href="' + local("index.html#faq") + '">FAQ</a>' +
-        '<a href="https://pos.puravigal.com/">Log in</a>' +
-        '<a href="' + local("contact.html") + '" class="nav-cta">Talk to us</a>' +
+        '<a href="' + accountsSignup + '" class="nav-cta">Get Started</a>' +
       '</nav>' +
     '</div>';
 
@@ -77,4 +78,14 @@
       });
     });
   }
+
+  // Keep legacy account links pointed at the central Puravigal Accounts service.
+  document.querySelectorAll('a[href$="login.html"]').forEach(function (link) { link.href = accountsSignin; });
+  document.querySelectorAll('a[href$="signup.html"]').forEach(function (link) { link.href = accountsSignup; });
+  document.querySelectorAll('a[href*="signup.html"]').forEach(function (link) {
+    if (/start free|get started free|sign up|signup/i.test(link.textContent.trim())) {
+      link.href = accountsSignup;
+      link.textContent = "Get Started";
+    }
+  });
 })();
