@@ -85,7 +85,7 @@
   document.querySelectorAll('a[href*="signup.html"]').forEach(function (link) {
     if (/start free|get started free|sign up|signup/i.test(link.textContent.trim())) {
       link.href = accountsSignup;
-      link.textContent = "Access now";
+      link.textContent = "Get Started";
     }
   });
 })();
