@@ -79,6 +79,45 @@
     });
   }
 
+
+  // Ask the central Accounts app whether this browser has an active session.
+  // The iframe reports only a boolean and never exposes the access token.
+  var authStatusFrame = document.createElement("iframe");
+  authStatusFrame.title = "Puravigal account status";
+  authStatusFrame.setAttribute("aria-hidden", "true");
+  authStatusFrame.tabIndex = -1;
+  authStatusFrame.style.cssText = "position:absolute;width:1px;height:1px;left:-10000px;top:-10000px;border:0;visibility:hidden";
+  authStatusFrame.src = "https://puravigal-accounts.onrender.com/?auth_status=1&parent_origin=" + encodeURIComponent(window.location.origin);
+  document.body.appendChild(authStatusFrame);
+
+  var authStatusKnown = false;
+  var isAuthenticated = false;
+  var ctaLinks = [];
+  function setCtaState(authenticated) {
+    authStatusKnown = true;
+    isAuthenticated = authenticated;
+    ctaLinks.forEach(function (link) {
+      link.textContent = authenticated ? "Access now" : "Get Started";
+      link.href = accountsSignup;
+      link.setAttribute("aria-label", authenticated ? "Access Puravigal POS" : "Get started with Puravigal");
+    });
+  }
+  window.addEventListener("message", function (event) {
+    if (event.origin !== "https://puravigal-accounts.onrender.com") return;
+    if (!event.data || event.data.type !== "PURAVIGAL_AUTH_STATUS") return;
+    if (event.data.parentOrigin !== window.location.origin) return;
+    setCtaState(event.data.authenticated === true);
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    ctaLinks = Array.from(document.querySelectorAll(".nav-cta, .hero-home .actions a.btn.primary, .final-cta .actions a.btn.light"))
+      .filter(function (link) { return /access now|get started/i.test(link.textContent.trim()); });
+    // Use the SSO callback on every CTA, including the already-signed-in case.
+    ctaLinks.forEach(function (link) { link.href = accountsSignup; });
+    // Until the cross-origin status check returns, avoid falsely claiming a signed-in state.
+    setCtaState(false);
+  });
+
   // Keep legacy account links pointed at the central Puravigal Accounts service.
   document.querySelectorAll('a[href$="login.html"]').forEach(function (link) { link.href = accountsSignin; });
   document.querySelectorAll('a[href$="signup.html"]').forEach(function (link) { link.href = accountsSignup; });
