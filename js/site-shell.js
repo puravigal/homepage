@@ -87,7 +87,7 @@
   authStatusFrame.setAttribute("aria-hidden", "true");
   authStatusFrame.tabIndex = -1;
   authStatusFrame.style.cssText = "position:absolute;width:1px;height:1px;left:-10000px;top:-10000px;border:0;visibility:hidden";
-  authStatusFrame.src = "https://puravigal-accounts.onrender.com/?auth_status=1&parent_origin=" + encodeURIComponent(window.location.origin);
+  authStatusFrame.src = "https://accounts.puravigal.com/?auth_status=1&parent_origin=" + encodeURIComponent(window.location.origin);
   document.body.appendChild(authStatusFrame);
 
   var authStatusKnown = false;
@@ -103,7 +103,7 @@
     });
   }
   window.addEventListener("message", function (event) {
-    if (event.origin !== "https://puravigal-accounts.onrender.com") return;
+    if (event.origin !== "https://accounts.puravigal.com") return;
     if (!event.data || event.data.type !== "PURAVIGAL_AUTH_STATUS") return;
     if (event.data.parentOrigin !== window.location.origin) return;
     setCtaState(event.data.authenticated === true);
