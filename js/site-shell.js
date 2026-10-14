@@ -20,7 +20,7 @@
         '<a href="' + local("pos/") + '">POS</a>' +
         '<a href="' + local("about-us.html") + '">About</a>' +
         '<a href="' + local("index.html#faq") + '">FAQ</a>' +
-        '<a href="' + accountsSignup + '" class="nav-cta">Get Started</a>' +
+        '<a href="' + accountsSignup + '" class="nav-cta">Access now</a>' +
       '</nav>' +
     '</div>';
 
@@ -85,7 +85,7 @@
   document.querySelectorAll('a[href*="signup.html"]').forEach(function (link) {
     if (/start free|get started free|sign up|signup/i.test(link.textContent.trim())) {
       link.href = accountsSignup;
-      link.textContent = "Get Started";
+      link.textContent = "Access now";
     }
   });
 })();
