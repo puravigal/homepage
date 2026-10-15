@@ -111,7 +111,7 @@
      Other POS marketing pages keep their normal navigation and CTA behaviour. */
   var signupUrl = "https://accounts.puravigal.com/?mode=signup&redirect_to=https%3A%2F%2Fpos.puravigal.com%2Fsso%2Fcallback";
   var appUrl = "https://pos.puravigal.com/";
-  var normalizedPath = window.location.pathname.replace(/index\\.html$/, "").replace(/\\/$/, "");
+  var normalizedPath = window.location.pathname.replace(/index\.html$/, "").replace(/\/$/, "");
   var isPosHome = normalizedPath === "/pos";
   if (isPosHome) {
     var ctas = Array.prototype.slice.call(document.querySelectorAll(
