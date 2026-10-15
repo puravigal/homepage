@@ -20,7 +20,7 @@
         '<div class="pos-nav-dropdown" data-business-dropdown><a data-nav="business-types" class="pos-dropdown-trigger" href="' + local("pos/industries/") + '" aria-haspopup="true" aria-expanded="false">Business types <span class="dropdown-chevron" aria-hidden="true">⌄</span></a><div class="pos-dropdown-menu" aria-label="Business types"><a href="' + local("pos/industries/retail.html") + '">Retail</a><a href="' + local("pos/industries/restaurant.html") + '">Restaurant</a><a href="' + local("pos/industries/cafe.html") + '">Café</a><a href="' + local("pos/industries/mobile-shop.html") + '">Mobile shop</a><a href="' + local("pos/industries/supermarket.html") + '">Supermarket</a><a href="' + local("pos/industries/grocery.html") + '">Grocery / provision store</a></div></div>' +
         '<a data-nav="resources" href="' + local("pos/resources.html") + '">Resources</a>' +
         '<a href="https://pos.puravigal.com/">Log in</a>' +
-        '<a data-pos-cta class="product-nav-cta" href="https://pos.puravigal.com/?signup=true">Get Started</a>' +
+        '<a data-pos-cta class="product-nav-cta" href="https://accounts.puravigal.com/?mode=signup&redirect_to=https%3A%2F%2Fpos.puravigal.com%2Fsso%2Fcallback">Get Started</a>' +
       '</nav>' +
     '</div>';
 
@@ -109,7 +109,7 @@
 
   /* All product entry CTAs use the same session decision. A signed-in visitor
      goes straight to the POS; a signed-out visitor goes to the signup screen. */
-  var signupUrl = "https://pos.puravigal.com/?signup=true";
+  var signupUrl = "https://accounts.puravigal.com/?mode=signup&redirect_to=https%3A%2F%2Fpos.puravigal.com%2Fsso%2Fcallback";
   var appUrl = "https://pos.puravigal.com/";
   var ctas = Array.prototype.slice.call(document.querySelectorAll(
     "[data-pos-cta], a[href*='pos.puravigal.com/?signup=true']"
