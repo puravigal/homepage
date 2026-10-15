@@ -24,6 +24,37 @@
       '</nav>' +
     '</div>';
 
+  function createAccountMenu(nav) {
+    var wrap = document.createElement("div");
+    wrap.className = "pv-account-menu";
+    wrap.hidden = true;
+    wrap.innerHTML = '<button type="button" class="pv-account-trigger" aria-label="Open account menu" aria-expanded="false"><span class="pv-account-avatar">P</span></button><div class="pv-account-popover" hidden><div class="pv-account-identity"><span class="pv-account-avatar pv-account-avatar-large">P</span><div><strong class="pv-account-name">Puravigal User</strong><span class="pv-account-email"></span></div></div><a class="pv-account-myaccount" href="https://accounts.puravigal.com/">My Account</a><button type="button" class="pv-account-signout">Sign Out</button></div>';
+    nav.appendChild(wrap);
+    var trigger = wrap.querySelector(".pv-account-trigger");
+    var popover = wrap.querySelector(".pv-account-popover");
+    trigger.addEventListener("click", function () {
+      var open = popover.hidden;
+      popover.hidden = !open;
+      trigger.setAttribute("aria-expanded", String(open));
+    });
+    document.addEventListener("click", function (event) {
+      if (!wrap.contains(event.target)) {
+        popover.hidden = true;
+        trigger.setAttribute("aria-expanded", "false");
+      }
+    });
+    wrap.querySelector(".pv-account-signout").addEventListener("click", function () {
+      if (authStatusFrame) authStatusFrame.src = "https://accounts.puravigal.com/?auth_status=1&auth_action=signout&parent_origin=" + encodeURIComponent(window.location.origin);
+    });
+    return {
+      wrap: wrap,
+      trigger: trigger,
+      name: wrap.querySelector(".pv-account-name"),
+      email: wrap.querySelector(".pv-account-email"),
+      avatars: wrap.querySelectorAll(".pv-account-avatar")
+    };
+  }
+
   var footer = document.createElement("footer");
   footer.innerHTML =
     '<div class="container footer-grid product-footer">' +
@@ -52,6 +83,8 @@
   var footerMount = document.querySelector("[data-pos-footer]");
   if (headerMount) headerMount.replaceWith(header);
   if (footerMount) footerMount.replaceWith(footer);
+  var accountMenu = createAccountMenu(header.querySelector("nav"));
+  var authStatusFrame = null;
 
   var path = window.location.pathname.replace(/index\.html$/, "").replace(/\/$/, "");
   var active = "overview";
@@ -107,42 +140,47 @@
     });
   }
 
-  /* Show the correct POS entry action based on the central Accounts session.
-     Signed in: hide Log in and show Access now -> POS app.
-     Signed out: show Log in and Get Started -> POS signup. */
+  /* Keep the POS CTA and account profile in sync with the central Accounts session. */
   var appUrl = "https://pos.puravigal.com/";
   var signupUrl = local("pos/signup.html");
-  var normalizedPath = window.location.pathname.replace(/index\.html$/, "").replace(/\/$/, "");
-  var isPosHome = normalizedPath === "/pos";
-  if (isPosHome) {
-    var accessCtas = Array.prototype.slice.call(document.querySelectorAll("[data-pos-cta]"));
-    var loginLink = header.querySelector("[data-pos-login]");
+  var accessCtas = Array.prototype.slice.call(document.querySelectorAll("[data-pos-cta]"));
+  var loginLink = header.querySelector("[data-pos-login]");
+  var authAccount = null;
 
-    function applyAuthState(signedIn) {
-      accessCtas.forEach(function (cta) {
-        cta.href = signedIn ? appUrl : signupUrl;
-        cta.textContent = signedIn ? "Access now" : "Get Started";
-        cta.setAttribute("aria-label", signedIn ? "Access Puravigal POS" : "Get started with Puravigal POS");
-      });
-      if (loginLink) { loginLink.hidden = signedIn; loginLink.style.display = signedIn ? "none" : ""; }
-    }
-
-    // Safe default until Accounts responds: treat the visitor as signed out.
-    applyAuthState(false);
-
-    var authStatusFrame = document.createElement("iframe");
-    authStatusFrame.title = "Puravigal account status";
-    authStatusFrame.setAttribute("aria-hidden", "true");
-    authStatusFrame.tabIndex = -1;
-    authStatusFrame.style.cssText = "position:absolute;width:1px;height:1px;left:-10000px;top:-10000px;border:0;visibility:hidden";
-    authStatusFrame.src = "https://accounts.puravigal.com/?auth_status=1&parent_origin=" + encodeURIComponent(window.location.origin);
-    document.body.appendChild(authStatusFrame);
-
-    window.addEventListener("message", function (event) {
-      if (event.origin !== "https://accounts.puravigal.com") return;
-      if (!event.data || event.data.type !== "PURAVIGAL_AUTH_STATUS") return;
-      if (event.data.parentOrigin !== window.location.origin) return;
-      applyAuthState(event.data.authenticated === true);
+  function applyAuthState(signedIn, account) {
+    if (account) authAccount = account;
+    accessCtas.forEach(function (cta) {
+      cta.href = signedIn ? appUrl : signupUrl;
+      cta.textContent = signedIn ? "Access now" : "Get Started";
+      cta.setAttribute("aria-label", signedIn ? "Access Puravigal POS" : "Get started with Puravigal POS");
     });
+    if (loginLink) {
+      loginLink.hidden = signedIn;
+      loginLink.style.display = signedIn ? "none" : "";
+    }
+    accountMenu.wrap.hidden = !signedIn;
+    if (signedIn && authAccount) {
+      var name = authAccount.fullName || "Puravigal User";
+      accountMenu.name.textContent = name;
+      accountMenu.email.textContent = authAccount.email || "";
+      var initials = name.split(/\\s+/).filter(Boolean).slice(0, 2).map(function (part) { return part.charAt(0); }).join("").toUpperCase() || "P";
+      accountMenu.avatars.forEach(function (avatar) { avatar.textContent = initials; });
+    }
   }
+
+  applyAuthState(false);
+  authStatusFrame = document.createElement("iframe");
+  authStatusFrame.title = "Puravigal account status";
+  authStatusFrame.setAttribute("aria-hidden", "true");
+  authStatusFrame.tabIndex = -1;
+  authStatusFrame.style.cssText = "position:absolute;width:1px;height:1px;left:-10000px;top:-10000px;border:0;visibility:hidden";
+  authStatusFrame.src = "https://accounts.puravigal.com/?auth_status=1&parent_origin=" + encodeURIComponent(window.location.origin);
+  document.body.appendChild(authStatusFrame);
+
+  window.addEventListener("message", function (event) {
+    if (event.origin !== "https://accounts.puravigal.com") return;
+    if (!event.data || event.data.type !== "PURAVIGAL_AUTH_STATUS") return;
+    if (event.data.parentOrigin !== window.location.origin) return;
+    applyAuthState(event.data.authenticated === true, event.data);
+  });
 })();
