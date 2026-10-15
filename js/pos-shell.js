@@ -20,7 +20,7 @@
         '<div class="pos-nav-dropdown" data-business-dropdown><a data-nav="business-types" class="pos-dropdown-trigger" href="' + local("pos/industries/") + '" aria-haspopup="true" aria-expanded="false">Business types <span class="dropdown-chevron" aria-hidden="true">⌄</span></a><div class="pos-dropdown-menu" aria-label="Business types"><a href="' + local("pos/industries/retail.html") + '">Retail</a><a href="' + local("pos/industries/restaurant.html") + '">Restaurant</a><a href="' + local("pos/industries/cafe.html") + '">Café</a><a href="' + local("pos/industries/mobile-shop.html") + '">Mobile shop</a><a href="' + local("pos/industries/supermarket.html") + '">Supermarket</a><a href="' + local("pos/industries/grocery.html") + '">Grocery / provision store</a></div></div>' +
         '<a data-nav="resources" href="' + local("pos/resources.html") + '">Resources</a>' +
         '<a href="https://accounts.puravigal.com/?mode=signin&amp;redirect_to=https%3A%2F%2Fpos.puravigal.com%2Fsso%2Fcallback">Log in</a>' +
-        '<a data-pos-cta class="product-nav-cta" href="' + local("pos/signup.html") + '">Get Started</a>' +
+        '<a data-pos-cta class="product-nav-cta" href="https://pos.puravigal.com/">Access now</a>' +
       '</nav>' +
     '</div>';
 
@@ -114,9 +114,7 @@
   var normalizedPath = window.location.pathname.replace(/index\.html$/, "").replace(/\/$/, "");
   var isPosHome = normalizedPath === "/pos";
   if (isPosHome) {
-    var ctas = Array.prototype.slice.call(document.querySelectorAll(
-      "[data-pos-cta], .pos-home-hero a.product-btn, .pos-closing-story a.product-btn"
-    ));
+    var ctas = Array.prototype.slice.call(document.querySelectorAll("[data-pos-cta]"));
     ctas.forEach(function (cta) {
       cta.href = appUrl;
       cta.setAttribute("aria-label", "Access Puravigal POS");
