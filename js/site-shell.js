@@ -4,7 +4,8 @@
   if (!script) return;
   var root = new URL("../", script.src);
   function local(path) { return new URL(path, root).href; }
-  var accountsSignup = "https://accounts.puravigal.com/?mode=signup&redirect_to=https%3A%2F%2Fpos.puravigal.com%2Fsso%2Fcallback";
+  var accountsProfile = "https://accounts.puravigal.com/";
+  var accountsSignup = "https://accounts.puravigal.com/?mode=signup";
   var accountsSignin = "https://accounts.puravigal.com/?mode=signin";
 
   var header = document.createElement("header");
@@ -98,7 +99,7 @@
     isAuthenticated = authenticated;
     ctaLinks.forEach(function (link) {
       link.textContent = authenticated ? "Access now" : "Get Started";
-      link.href = accountsSignup;
+      link.href = authenticated ? accountsProfile : accountsSignup;
       link.setAttribute("aria-label", authenticated ? "Access Puravigal POS" : "Get started with Puravigal");
     });
   }
@@ -112,8 +113,7 @@
   document.addEventListener("DOMContentLoaded", function () {
     ctaLinks = Array.from(document.querySelectorAll(".nav-cta, .hero-home .actions a.btn.primary, .final-cta .actions a.btn.light"))
       .filter(function (link) { return /access now|get started/i.test(link.textContent.trim()); });
-    // Use the SSO callback on every CTA, including the already-signed-in case.
-    ctaLinks.forEach(function (link) { link.href = accountsSignup; });
+    // Main-site CTAs always stay in Accounts; only the dedicated POS-section CTA starts POS SSO.
     // Until the cross-origin status check returns, avoid falsely claiming a signed-in state.
     setCtaState(authStatusKnown ? isAuthenticated : false);
   });
