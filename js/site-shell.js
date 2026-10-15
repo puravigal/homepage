@@ -120,5 +120,4 @@
 
   // Keep legacy account links pointed at the central Puravigal Accounts service.
   document.querySelectorAll('a[href$="login.html"]').forEach(function (link) { link.href = accountsSignin; });
-  document.querySelectorAll('a[href$="login.html"]').forEach(function (link) { link.href = accountsSignin; });
 })();
