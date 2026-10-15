@@ -107,9 +107,9 @@
     });
   }
 
-  /* Only the POS overview page adapts its entry CTAs to the central Accounts session.
-     Other POS marketing pages keep their normal navigation and CTA behaviour. */
-  var signupUrl = local("pos/signup.html");
+  /* POS product-page Access now CTAs always open the POS app.
+     The app itself handles authentication if the visitor is not signed in.
+     Keep the main Puravigal homepage CTA behaviour separate in site-shell.js. */
   var appUrl = "https://pos.puravigal.com/";
   var normalizedPath = window.location.pathname.replace(/index\.html$/, "").replace(/\/$/, "");
   var isPosHome = normalizedPath === "/pos";
@@ -118,33 +118,8 @@
       "[data-pos-cta], .pos-home-hero a.product-btn, .pos-closing-story a.product-btn"
     ));
     ctas.forEach(function (cta) {
-      cta.href = signupUrl;
-      cta.setAttribute("aria-label", "Get started with Puravigal POS");
-    });
-
-    // Ask Accounts for a boolean session status only; never expose an access token to this page.
-    var authStatusFrame = document.createElement("iframe");
-    authStatusFrame.title = "Puravigal account status";
-    authStatusFrame.setAttribute("aria-hidden", "true");
-    authStatusFrame.tabIndex = -1;
-    authStatusFrame.style.cssText = "position:absolute;width:1px;height:1px;left:-10000px;top:-10000px;border:0;visibility:hidden";
-    authStatusFrame.src = "https://accounts.puravigal.com/?auth_status=1&parent_origin=" + encodeURIComponent(window.location.origin);
-    document.body.appendChild(authStatusFrame);
-
-    window.addEventListener("message", function (event) {
-      if (event.origin !== "https://accounts.puravigal.com") return;
-      if (!event.data || event.data.type !== "PURAVIGAL_AUTH_STATUS") return;
-      if (event.data.parentOrigin !== window.location.origin) return;
-      var signedIn = event.data.authenticated === true;
-      ctas.forEach(function (cta) {
-        cta.href = signedIn ? appUrl : signupUrl;
-        if (cta.hasAttribute("data-pos-cta")) {
-          cta.textContent = signedIn ? "Access now" : "Get Started";
-        } else if (cta.classList.contains("product-btn")) {
-          cta.textContent = signedIn ? "Access now" : "Start free";
-        }
-        cta.setAttribute("aria-label", signedIn ? "Access Puravigal POS" : "Get started with Puravigal POS");
-      });
+      cta.href = appUrl;
+      cta.setAttribute("aria-label", "Access Puravigal POS");
     });
   }
 })();
