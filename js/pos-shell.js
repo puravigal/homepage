@@ -112,7 +112,7 @@
   var signupUrl = "https://accounts.puravigal.com/?mode=signup&redirect_to=https%3A%2F%2Fpos.puravigal.com%2Fsso%2Fcallback";
   var appUrl = "https://pos.puravigal.com/";
   var ctas = Array.prototype.slice.call(document.querySelectorAll(
-    "[data-pos-cta], a[href*='pos.puravigal.com/?signup=true']"
+    "[data-pos-cta], a[href*='pos.puravigal.com/?signup=true'], a[href*='accounts.puravigal.com/?mode=signup&redirect_to='], .pos-site a.product-btn"
   ));
   ctas.forEach(function (cta) {
     cta.href = signupUrl;
@@ -131,7 +131,9 @@
       var signedIn = !!(data && data.authenticated === true);
       ctas.forEach(function (cta) {
         cta.href = signedIn ? appUrl : signupUrl;
-        cta.textContent = signedIn ? "Access Now" : "Get Started";
+        if (cta.hasAttribute("data-pos-cta")) {
+          cta.textContent = signedIn ? "Access now" : "Get Started";
+        }
         cta.setAttribute("aria-label", signedIn ? "Access Puravigal POS" : "Get started with Puravigal POS");
       });
     }).catch(function () {
