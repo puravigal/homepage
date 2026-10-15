@@ -36,7 +36,13 @@
 (function(){
  const API="https://puravigal-accounts-api.onrender.com";
  const form=document.getElementById("signup-form"),msg=document.getElementById("form-message"),verify=document.getElementById("verify-panel"),submit=document.getElementById("submit-button");
- const email= document.getElementById("email");
+ const email=document.getElementById("email"),country=document.getElementById("country-code"),phone=document.getElementById("phone-number");
+ const marketingRow=document.getElementById("marketing-consent-row");
+ const marketingCountries=new Set(["AT","BE","BG","HR","CY","CZ","DK","EE","FI","FR","DE","GR","HU","IS","IE","IT","LV","LI","LT","LU","MT","NL","NO","PL","PT","RO","SK","SI","ES","SE","GB"]);
+ function updateCountryConsent(){const code=country.selectedOptions[0]?.dataset.country||"";marketingRow.hidden=!marketingCountries.has(code);if(marketingRow.hidden)document.getElementById("marketing-consent").checked=false;}
+ country.addEventListener("change",updateCountryConsent);updateCountryConsent();
+ email.addEventListener("input",()=>email.setCustomValidity(""));
+ phone.addEventListener("input",()=>phone.setCustomValidity(""));
  function note(text,error){msg.textContent=text;msg.style.color=error?"#b42318":"#067647";}
  async function post(path,payload){const r=await fetch(API+path,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});const data=await r.json().catch(()=>({}));if(!r.ok)throw new Error((typeof data.error==="string"?data.error:data.error?.message)||data.message||"Something went wrong. Please try again.");return data;}
  form.addEventListener("submit",async e=>{e.preventDefault();
