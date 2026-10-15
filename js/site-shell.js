@@ -5,7 +5,7 @@
   var root = new URL("../", script.src);
   function local(path) { return new URL(path, root).href; }
   var accountsProfile = "https://accounts.puravigal.com/";
-  var accountsSignup = "https://accounts.puravigal.com/?mode=signup";
+  var accountsSignup = local("signup.html");
   var accountsSignin = "https://accounts.puravigal.com/?mode=signin";
 
   var header = document.createElement("header");
@@ -120,11 +120,5 @@
 
   // Keep legacy account links pointed at the central Puravigal Accounts service.
   document.querySelectorAll('a[href$="login.html"]').forEach(function (link) { link.href = accountsSignin; });
-  document.querySelectorAll('a[href$="signup.html"]').forEach(function (link) { link.href = accountsSignup; });
-  document.querySelectorAll('a[href*="signup.html"]').forEach(function (link) {
-    if (/start free|get started free|sign up|signup/i.test(link.textContent.trim())) {
-      link.href = accountsSignup;
-      link.textContent = "Get Started";
-    }
-  });
+  document.querySelectorAll('a[href$="login.html"]').forEach(function (link) { link.href = accountsSignin; });
 })();
