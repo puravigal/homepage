@@ -19,7 +19,7 @@
         '<a data-nav="pricing" href="' + local("pos/pricing.html") + '">Pricing</a>' +
         '<div class="pos-nav-dropdown" data-business-dropdown><a data-nav="business-types" class="pos-dropdown-trigger" href="' + local("pos/industries/") + '" aria-haspopup="true" aria-expanded="false">Business types <span class="dropdown-chevron" aria-hidden="true">⌄</span></a><div class="pos-dropdown-menu" aria-label="Business types"><a href="' + local("pos/industries/retail.html") + '">Retail</a><a href="' + local("pos/industries/restaurant.html") + '">Restaurant</a><a href="' + local("pos/industries/cafe.html") + '">Café</a><a href="' + local("pos/industries/mobile-shop.html") + '">Mobile shop</a><a href="' + local("pos/industries/supermarket.html") + '">Supermarket</a><a href="' + local("pos/industries/grocery.html") + '">Grocery / provision store</a></div></div>' +
         '<a data-nav="resources" href="' + local("pos/resources.html") + '">Resources</a>' +
-        '<a href="https://accounts.puravigal.com/?mode=signin&amp;redirect_to=https%3A%2F%2Fpos.puravigal.com%2Fsso%2Fcallback">Log in</a>' +
+        '<a data-pos-login href="https://accounts.puravigal.com/?mode=signin&amp;redirect_to=https%3A%2F%2Fpos.puravigal.com%2Fsso%2Fcallback">Log in</a>' +
         '<a data-pos-cta class="product-nav-cta" href="https://pos.puravigal.com/">Access now</a>' +
       '</nav>' +
     '</div>';
@@ -107,17 +107,42 @@
     });
   }
 
-  /* POS product-page Access now CTAs always open the POS app.
-     The app itself handles authentication if the visitor is not signed in.
-     Keep the main Puravigal homepage CTA behaviour separate in site-shell.js. */
+  /* Show the correct POS entry action based on the central Accounts session.
+     Signed in: hide Log in and show Access now -> POS app.
+     Signed out: show Log in and Get Started -> POS signup. */
   var appUrl = "https://pos.puravigal.com/";
+  var signupUrl = local("pos/signup.html");
   var normalizedPath = window.location.pathname.replace(/index\.html$/, "").replace(/\/$/, "");
   var isPosHome = normalizedPath === "/pos";
   if (isPosHome) {
-    var ctas = Array.prototype.slice.call(document.querySelectorAll("[data-pos-cta]"));
-    ctas.forEach(function (cta) {
-      cta.href = appUrl;
-      cta.setAttribute("aria-label", "Access Puravigal POS");
+    var accessCtas = Array.prototype.slice.call(document.querySelectorAll("[data-pos-cta]"));
+    var loginLink = header.querySelector("[data-pos-login]");
+
+    function applyAuthState(signedIn) {
+      accessCtas.forEach(function (cta) {
+        cta.href = signedIn ? appUrl : signupUrl;
+        cta.textContent = signedIn ? "Access now" : "Get Started";
+        cta.setAttribute("aria-label", signedIn ? "Access Puravigal POS" : "Get started with Puravigal POS");
+      });
+      if (loginLink) loginLink.hidden = signedIn;
+    }
+
+    // Safe default until Accounts responds: treat the visitor as signed out.
+    applyAuthState(false);
+
+    var authStatusFrame = document.createElement("iframe");
+    authStatusFrame.title = "Puravigal account status";
+    authStatusFrame.setAttribute("aria-hidden", "true");
+    authStatusFrame.tabIndex = -1;
+    authStatusFrame.style.cssText = "position:absolute;width:1px;height:1px;left:-10000px;top:-10000px;border:0;visibility:hidden";
+    authStatusFrame.src = "https://accounts.puravigal.com/?auth_status=1&parent_origin=" + encodeURIComponent(window.location.origin);
+    document.body.appendChild(authStatusFrame);
+
+    window.addEventListener("message", function (event) {
+      if (event.origin !== "https://accounts.puravigal.com") return;
+      if (!event.data || event.data.type !== "PURAVIGAL_AUTH_STATUS") return;
+      if (event.data.parentOrigin !== window.location.origin) return;
+      applyAuthState(event.data.authenticated === true);
     });
   }
 })();
