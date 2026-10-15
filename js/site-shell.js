@@ -45,7 +45,7 @@
       }
     });
     wrap.querySelector(".pv-account-signout").addEventListener("click", function () {
-      window.location.href = "https://accounts.puravigal.com/?mode=signout&return_to=" + encodeURIComponent(window.location.href);
+      if (authStatusFrame) authStatusFrame.src = "https://accounts.puravigal.com/?auth_status=1&auth_action=signout&parent_origin=" + encodeURIComponent(window.location.origin);
     });
     return {
       wrap: wrap,
