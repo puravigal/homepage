@@ -25,6 +25,37 @@
       '</nav>' +
     '</div>';
 
+  function createAccountMenu(nav) {
+    var wrap = document.createElement("div");
+    wrap.className = "pv-account-menu";
+    wrap.hidden = true;
+    wrap.innerHTML = '<button type="button" class="pv-account-trigger" aria-label="Open account menu" aria-expanded="false"><span class="pv-account-avatar">P</span></button><div class="pv-account-popover" hidden><div class="pv-account-identity"><span class="pv-account-avatar pv-account-avatar-large">P</span><div><strong class="pv-account-name">Puravigal User</strong><span class="pv-account-email"></span></div></div><a class="pv-account-myaccount" href="https://accounts.puravigal.com/">My Account</a><button type="button" class="pv-account-signout">Sign Out</button></div>';
+    nav.appendChild(wrap);
+    var trigger = wrap.querySelector(".pv-account-trigger");
+    var popover = wrap.querySelector(".pv-account-popover");
+    trigger.addEventListener("click", function () {
+      var open = popover.hidden;
+      popover.hidden = !open;
+      trigger.setAttribute("aria-expanded", String(open));
+    });
+    document.addEventListener("click", function (event) {
+      if (!wrap.contains(event.target)) {
+        popover.hidden = true;
+        trigger.setAttribute("aria-expanded", "false");
+      }
+    });
+    wrap.querySelector(".pv-account-signout").addEventListener("click", function () {
+      window.location.href = "https://accounts.puravigal.com/?mode=signout&return_to=" + encodeURIComponent(window.location.href);
+    });
+    return {
+      wrap: wrap,
+      trigger: trigger,
+      name: wrap.querySelector(".pv-account-name"),
+      email: wrap.querySelector(".pv-account-email"),
+      avatars: wrap.querySelectorAll(".pv-account-avatar")
+    };
+  }
+
   var footer = document.createElement("footer");
   footer.innerHTML =
     '<div class="container footer-grid">' +
@@ -49,6 +80,7 @@
   var footerMount = document.querySelector("[data-site-footer]");
   if (headerMount) headerMount.replaceWith(header);
   if (footerMount) footerMount.replaceWith(footer);
+  var accountMenu = createAccountMenu(header.querySelector("nav"));
 
   var currentPath = window.location.pathname.replace(/index\.html$/, "").replace(/\/$/, "");
   header.querySelectorAll("nav a").forEach(function (link) {
@@ -93,21 +125,31 @@
 
   var authStatusKnown = false;
   var isAuthenticated = false;
+  var authAccount = null;
   var ctaLinks = [];
-  function setCtaState(authenticated) {
+  function setCtaState(authenticated, account) {
     authStatusKnown = true;
     isAuthenticated = authenticated;
+    if (account) authAccount = account;
     ctaLinks.forEach(function (link) {
       link.textContent = authenticated ? "Access now" : "Get Started";
       link.href = authenticated ? accountsProfile : accountsSignup;
-      link.setAttribute("aria-label", authenticated ? "Access Puravigal POS" : "Get started with Puravigal");
+      link.setAttribute("aria-label", authenticated ? "Access Puravigal account" : "Get started with Puravigal");
     });
+    accountMenu.wrap.hidden = !authenticated;
+    if (authenticated && authAccount) {
+      var name = authAccount.fullName || "Puravigal User";
+      accountMenu.name.textContent = name;
+      accountMenu.email.textContent = authAccount.email || "";
+      var initials = name.split(/\\s+/).filter(Boolean).slice(0, 2).map(function (part) { return part.charAt(0); }).join("").toUpperCase() || "P";
+      accountMenu.avatars.forEach(function (avatar) { avatar.textContent = initials; });
+    }
   }
   window.addEventListener("message", function (event) {
     if (event.origin !== "https://accounts.puravigal.com") return;
     if (!event.data || event.data.type !== "PURAVIGAL_AUTH_STATUS") return;
     if (event.data.parentOrigin !== window.location.origin) return;
-    setCtaState(event.data.authenticated === true);
+    setCtaState(event.data.authenticated === true, event.data);
   });
 
   document.addEventListener("DOMContentLoaded", function () {
