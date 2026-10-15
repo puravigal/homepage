@@ -35,6 +35,15 @@
 .auth-card #marketing-consent-row:not([hidden]){display:flex!important}
 .auth-card #signup-form input#phone-number{width:100%!important;max-width:100%!important;min-width:0!important;box-sizing:border-box!important;min-height:48px!important;height:48px!important}
 
+
+.auth-card #signup-form[hidden],.auth-card #verify-panel[hidden]{display:none!important}
+.auth-card #verify-panel{display:flex;flex-direction:column;gap:14px;margin-top:22px;width:100%}
+.auth-card #verify-panel label{display:block;width:100%;margin:0}
+.auth-card #verify-panel input{display:block;width:100%;box-sizing:border-box;margin-top:8px}
+.auth-card #verify-panel button{width:100%;min-height:48px;margin:0}
+.auth-card #verify-panel button.secondary{margin-top:0}
+.auth-card #form-message{margin:12px 0;color:#067647;font-size:14px;line-height:1.5}
+.auth-card #form-message:empty{display:none}
 </style>
 </head>
 <body class="pos-site auth-page"><div data-pos-header></div>
@@ -83,7 +92,9 @@
  if(phoneDigits.length<6||phoneDigits.length>15){phone.setCustomValidity("Enter a valid phone number with 6–15 digits.");phone.reportValidity();return;}
  if(!form.reportValidity())return;
  submit.disabled=true;try{await post("/api/auth/product-signup",{product:"pos",fullName:document.getElementById("full-name").value.trim(),businessName:document.getElementById("business-name").value.trim(),businessType:document.getElementById("business-type").value,countryCode:document.getElementById("country-code").value,countryName:document.getElementById("country-code").selectedOptions[0].textContent,phoneNumber:phone.value.trim(),marketingConsent:document.getElementById("marketing-consent").checked,email:email.value.trim(),password:document.getElementById("password").value});form.hidden=true;verify.hidden=false;document.getElementById("form-title").textContent="Verify your email";document.getElementById("form-description").textContent="Enter the 6-digit verification code sent to "+email.value.trim()+".";note("Verification code sent. Check your inbox and spam folder.");}catch(err){note(err.message,true);}finally{submit.disabled=false;}});
- document.getElementById("verify-button").addEventListener("click",async()=>{const b=document.getElementById("verify-button");b.disabled=true;try{await post("/api/auth/verify-email",{email:email.value.trim(),otp:document.getElementById("otp").value.trim()});note("Email verified. Continue to sign in to open POS.");window.location.replace("https://accounts.puravigal.com/?mode=signin&redirect_to=https%3A%2F%2Fpos.puravigal.com%2Fsso%2Fcallback");}catch(err){note(err.message,true);}finally{b.disabled=false;}});
+ document.getElementById("verify-button").addEventListener("click",async()=>{const b=document.getElementById("verify-button");b.disabled=true;try{const result=await post("/api/auth/verify-email",{email:email.value.trim(),otp:document.getElementById("otp").value.trim(),password:document.getElementById("password").value,returnSession:true});
+ if(result.access_token){note("Email verified. Opening POS…");window.location.replace("https://pos.puravigal.com/sso/callback#account_access_token="+encodeURIComponent(result.access_token));}
+ else {note("Email verified, but automatic sign-in is not configured. Please sign in once to continue.",true);window.location.replace("https://accounts.puravigal.com/?mode=signin&redirect_to=https%3A%2F%2Fpos.puravigal.com%2Fsso%2Fcallback");}}catch(err){note(err.message,true);}finally{b.disabled=false;}});
  document.getElementById("resend-button").addEventListener("click",async()=>{const b=document.getElementById("resend-button");b.disabled=true;try{await post("/api/auth/resend-verification",{email:email.value.trim()});note("If verification is still needed, a new code has been sent.");}catch(err){note(err.message,true);}finally{b.disabled=false;}});
 })();
 </script>
