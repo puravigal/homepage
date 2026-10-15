@@ -6,7 +6,23 @@
 <meta name="description" content="Create your Puravigal account to get started with Puravigal products.">
 <meta name="robots" content="noindex,follow">
 <link rel="canonical" href="https://www.puravigal.com/signup.html">
-<link rel="icon" href="images/fav/favicon.ico"><link rel="stylesheet" href="css/site.css">
+<link rel="icon" href="images/fav/favicon.ico"><link rel="stylesheet" href="css/site.css">\n<style>
+/* Signup form control consistency and accessible validation */
+.auth-card #signup-form input:not([type="checkbox"]),
+.auth-card #signup-form select,
+.auth-card #verify-panel input:not([type="checkbox"]) {
+  display:block;width:100%;max-width:100%;min-width:0;box-sizing:border-box;
+  min-height:48px;padding:12px 14px;border:1px solid #d7deeb;border-radius:12px;
+  background:#fff;color:#182033;font:inherit;line-height:1.4;
+}
+.auth-card #signup-form input[type="tel"] {appearance:none;-webkit-appearance:none;width:100%;height:48px;min-height:48px;padding:12px 14px;border:1px solid #d7deeb;border-radius:12px;font:inherit;box-sizing:border-box}
+.auth-card #signup-form input:focus-visible,.auth-card #signup-form select:focus-visible,.auth-card #verify-panel input:focus-visible{outline:3px solid rgba(35,91,222,.2);outline-offset:1px;border-color:#235BDE}
+.auth-card #signup-form input:invalid:not(:placeholder-shown){border-color:#d92d20}
+.auth-card #signup-form .check{display:flex;align-items:flex-start;gap:10px;line-height:1.55}
+.auth-card #signup-form .check input[type="checkbox"]{flex:0 0 auto;width:17px;height:17px;margin-top:3px}
+.auth-card #marketing-consent-row[hidden]{display:none!important}
+.auth-card #form-message:empty{display:none}
+</style>
 </head>
 <body class="auth-page">
 <header class="site-header"><div class="container nav-wrap"><a class="brand" href="index.html"><img src="images/puravigal-black-logo.svg" alt="Puravigal" width="151"></a><nav><a href="index.html">Home</a><a href="pos/">POS</a><a href="https://accounts.puravigal.com/?mode=signin">Sign in</a></nav></div></header>
