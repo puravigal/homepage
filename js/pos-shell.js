@@ -124,7 +124,7 @@
         cta.textContent = signedIn ? "Access now" : "Get Started";
         cta.setAttribute("aria-label", signedIn ? "Access Puravigal POS" : "Get started with Puravigal POS");
       });
-      if (loginLink) loginLink.hidden = signedIn;
+      if (loginLink) { loginLink.hidden = signedIn; loginLink.style.display = signedIn ? "none" : ""; }
     }
 
     // Safe default until Accounts responds: treat the visitor as signed out.
