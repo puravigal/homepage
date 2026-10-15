@@ -116,7 +116,7 @@
   ));
   ctas.forEach(function (cta) {
     cta.href = signupUrl;
-    cta.textContent = "Get Started";
+    if (cta.hasAttribute("data-pos-cta")) cta.textContent = "Get Started";
     cta.setAttribute("aria-label", "Get started with Puravigal POS");
   });
   if (ctas.length) {
