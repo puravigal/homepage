@@ -21,7 +21,8 @@
         '<a href="' + local("pos/") + '">POS</a>' +
         '<a href="' + local("about-us.html") + '">About</a>' +
         '<a href="' + local("index.html#faq") + '">FAQ</a>' +
-        '<a href="' + accountsSignup + '" class="nav-cta">Access now</a>' +
+        '<a href="' + accountsSignin + '" class="nav-login">Log in</a>' +
+        '<a href="' + accountsSignup + '" class="nav-cta">Get Started</a>' +
       '</nav>' +
     '</div>';
 
@@ -131,6 +132,8 @@
     authStatusKnown = true;
     isAuthenticated = authenticated;
     if (account) authAccount = account;
+    var loginLink = header.querySelector(".nav-login");
+    if (loginLink) loginLink.hidden = authenticated;
     ctaLinks.forEach(function (link) {
       link.textContent = authenticated ? "Access now" : "Get Started";
       link.href = authenticated ? accountsProfile : accountsSignup;
