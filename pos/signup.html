@@ -6,7 +6,7 @@
 <meta name="description" content="Create your Puravigal POS account for billing, products, inventory and sales visibility.">
 <meta name="robots" content="noindex,follow">
 <link rel="canonical" href="https://www.puravigal.com/pos/signup.html">
-<link rel="icon" href="../images/fav/favicon.ico"><link rel="stylesheet" href="../css/site.css?v=20261017-signup-ui-1">
+<link rel="icon" href="../images/fav/favicon.ico"><link rel="stylesheet" href="../css/site.css?v=20261017-signup-ui-2">
 <style>
 /* Signup form control consistency and accessible validation */
 .auth-card #signup-form input:not([type="checkbox"]),
@@ -65,6 +65,30 @@
 .auth-card #verify-panel{width:100%;min-width:0;}
 .auth-card #verify-panel button{width:100%;min-height:48px;box-sizing:border-box;}
 @media(max-width:600px){.auth-shell{padding:28px 14px 40px!important;}.auth-shell .auth-card{padding:26px 20px!important;border-radius:20px!important;}.auth-card h1{font-size:36px!important;}}
+
+
+/* POS signup typography and text wrapping */
+.auth-card h1,
+.auth-card .auth-lead,
+.auth-card #form-description,
+.auth-card #signup-form label,
+.auth-card #signup-form select,
+.auth-card .signup-legal-copy,
+.auth-card #form-message,
+.auth-card #verify-panel,
+.auth-card #verify-panel label {
+  white-space:normal!important;
+  overflow-wrap:anywhere;
+  word-break:normal;
+  min-width:0;
+}
+.auth-card h1{max-width:100%;line-height:1.12!important;letter-spacing:-.04em}
+.auth-card .auth-lead{max-width:100%;line-height:1.6}
+.auth-card #signup-form label{display:grid!important;grid-template-columns:minmax(0,1fr);align-items:start}
+.auth-card #signup-form select{white-space:normal!important;text-overflow:ellipsis}
+.auth-card #signup-form select option{white-space:normal}
+.auth-card #signup-form .signup-legal-copy{white-space:normal;overflow-wrap:anywhere}
+@media(max-width:600px){.auth-card h1{font-size:34px!important}}
 
 </style>
 </head>
