@@ -6,7 +6,7 @@
 <meta name="description" content="Create your Puravigal POS account for billing, products, inventory and sales visibility.">
 <meta name="robots" content="noindex,follow">
 <link rel="canonical" href="https://www.puravigal.com/pos/signup.html">
-<link rel="icon" href="../images/fav/favicon.ico"><link rel="stylesheet" href="../css/site.css?v=20261017-signup-ui-3">
+<link rel="icon" href="../images/fav/favicon.ico"><link rel="stylesheet" href="../css/site.css?v=20261017-signup-ui-4">
 <style>
 /* Signup form control consistency and accessible validation */
 .auth-card #signup-form input:not([type="checkbox"]),
@@ -164,7 +164,28 @@ button[aria-busy="true"] .signup-spinner{margin-right:9px}
    if(button.dataset.originalHtml!==undefined){button.innerHTML=button.dataset.originalHtml;delete button.dataset.originalHtml;}
    document.getElementById("signup-loading-overlay")?.remove();
  }
- function note(text,error){msg.textContent=text;msg.style.color=error?"#b42318":"#067647";}
+ function note(text,error){
+   msg.replaceChildren();
+   msg.style.color=error?"#b42318":"#067647";
+   if(error && /account with this email already exists/i.test(text)){
+     msg.append(document.createTextNode("An account with this email already exists. "));
+     const signIn=document.createElement("a");
+     signIn.href="https://accounts.puravigal.com/?mode=signin";
+     signIn.textContent="Sign in";
+     const reset=document.createElement("a");
+     reset.href="https://accounts.puravigal.com/?mode=reset";
+     reset.textContent="reset your password";
+     msg.append(signIn,document.createTextNode(" or "),reset,document.createTextNode("."));
+     return;
+   }
+   msg.textContent=text;
+ }
+ // Clear stale success/error feedback as soon as the user edits the form.
+ form.querySelectorAll("input,select").forEach(function(field){
+   const clearMessage=function(){if(msg.textContent){msg.replaceChildren();msg.style.color="";}};
+   field.addEventListener("input",clearMessage);
+   field.addEventListener("change",clearMessage);
+ });
  async function post(path,payload){const r=await fetch(API+path,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});const data=await r.json().catch(()=>({}));if(!r.ok)throw new Error((typeof data.error==="string"?data.error:data.error?.message)||data.message||"Something went wrong. Please try again.");return data;}
  form.addEventListener("submit",async e=>{e.preventDefault();
  phone.setCustomValidity("");const phoneDigits=phone.value.replace(/\D/g,"");
