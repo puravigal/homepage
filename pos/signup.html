@@ -175,7 +175,7 @@ button[aria-busy="true"] .signup-spinner{margin-right:9px}
  document.getElementById("verify-button").addEventListener("click",async()=>{const b=document.getElementById("verify-button");setLoading(b,"Verifying your email…");try{const result=await post("/api/auth/verify-email",{email:email.value.trim(),otp:document.getElementById("otp").value.trim(),password:document.getElementById("password").value,returnSession:true});
  if(result.access_token){note("Email verified. Opening POS…");window.location.replace("https://pos.puravigal.com/sso/callback#account_access_token="+encodeURIComponent(result.access_token));}
  else {note("Email verified, but automatic sign-in is not configured. Please sign in once to continue.",true);window.location.replace("https://accounts.puravigal.com/?mode=signin&redirect_to=https%3A%2F%2Fpos.puravigal.com%2Fsso%2Fcallback");}}catch(err){note(err.message,true);}finally{clearLoading(b);}});
- document.getElementById("resend-button").addEventListener("click",async()=>{const b=document.getElementById("resend-button");setLoading(b,"Sending verification code…");try{await post("/api/auth/resend-verification",{email:email.value.trim()});note("If verification is still needed, a new code has been sent.");}catch(err){note(err.message,true);}finally{b.disabled=false;}});
+ document.getElementById("resend-button").addEventListener("click",async()=>{const b=document.getElementById("resend-button");setLoading(b,"Sending verification code…");try{await post("/api/auth/resend-verification",{email:email.value.trim()});note("If verification is still needed, a new code has been sent.");}catch(err){note(err.message,true);}finally{clearLoading(b);}});
 })();
 </script>
 </body></html>
