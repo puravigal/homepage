@@ -60,6 +60,7 @@ button[aria-busy="true"] .signup-spinner{margin-right:9px}
 @keyframes signup-spin{to{transform:rotate(360deg)}}
 @media(prefers-reduced-motion:reduce){.signup-spinner{animation-duration:1.6s}}
 
+.google-signup-wrap{display:grid;gap:13px;margin:18px 0 20px}.google-signup-button{display:flex;align-items:center;justify-content:center;gap:11px;width:100%;min-height:48px;padding:12px 16px;border:1px solid #d7deeb;border-radius:12px;background:#fff;color:#182033;font:600 15px/1.3 inherit;text-decoration:none;box-sizing:border-box;transition:background .18s,border-color .18s}.google-signup-button:hover{background:#f8faff;border-color:#aebbd3}.google-signup-g{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;font:800 19px Arial,sans-serif;color:#4285f4;text-shadow:1px 0 #34a853,-1px 0 #ea4335}.google-signup-divider{display:flex;align-items:center;gap:12px;color:#8792a6;font-size:12px}.google-signup-divider:before,.google-signup-divider:after{content:"";height:1px;flex:1;background:#e5eaf2}
 </style>
 </head>
 <body class="auth-page">
@@ -68,6 +69,10 @@ button[aria-busy="true"] .signup-spinner{margin-right:9px}
 <span class="eyebrow">Puravigal account</span><h1 id="form-title">Create your Puravigal account.</h1>
 <p class="auth-lead" id="form-description">One account for your Puravigal journey. Sign in and account security are managed centrally.</p>
 <div id="form-message" role="status" aria-live="polite" class="form-note"></div>
+<div class="google-signup-wrap">
+<a class="google-signup-button" href="https://accounts.puravigal.com/?google_signup=1"><span class="google-signup-g" aria-hidden="true">G</span>Continue with Google</a>
+<div class="google-signup-divider"><span>or sign up with email</span></div>
+</div>
 <form id="signup-form">
 <label>Full name<input id="full-name" type="text" autocomplete="name" placeholder="Your full name" required minlength="2" maxlength="120"></label>
 <label>Country / calling code<select id="country-code" autocomplete="tel-country-code" required><option value="+91" data-country="IN">India (+91)</option><option value="+1" data-country="US">United States (+1)</option><option value="+44" data-country="GB">United Kingdom (+44)</option><option value="+971" data-country="AE">United Arab Emirates (+971)</option><option value="+61" data-country="AU">Australia (+61)</option><option value="+65" data-country="SG">Singapore (+65)</option><option value="+60" data-country="MY">Malaysia (+60)</option><option value="+94" data-country="LK">Sri Lanka (+94)</option><option value="+880" data-country="BD">Bangladesh (+880)</option><option value="+977" data-country="NP">Nepal (+977)</option><option value="+966" data-country="SA">Saudi Arabia (+966)</option><option value="+974" data-country="QA">Qatar (+974)</option><option value="+49" data-country="DE">Germany (+49)</option><option value="+33" data-country="FR">France (+33)</option><option value="+81" data-country="JP">Japan (+81)</option><option value="+82" data-country="KR">South Korea (+82)</option><option value="+86" data-country="CN">China (+86)</option><option value="+27" data-country="ZA">South Africa (+27)</option></select></label>
