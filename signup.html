@@ -6,7 +6,8 @@
 <meta name="description" content="Create your Puravigal account to get started with Puravigal products.">
 <meta name="robots" content="noindex,follow">
 <link rel="canonical" href="https://www.puravigal.com/signup.html">
-<link rel="icon" href="images/fav/favicon.ico"><link rel="stylesheet" href="css/site.css">\n<style>
+<link rel="icon" href="images/fav/favicon.ico"><link rel="stylesheet" href="css/site.css?v=20261017-signup-ui-1">
+<style>
 /* Signup form control consistency and accessible validation */
 .auth-card #signup-form input:not([type="checkbox"]),
 .auth-card #signup-form select,
@@ -15,13 +16,37 @@
   min-height:48px;padding:12px 14px;border:1px solid #d7deeb;border-radius:12px;
   background:#fff;color:#182033;font:inherit;line-height:1.4;
 }
-.auth-card #signup-form label:has(> input#phone-number){display:block;width:100%;min-width:0}.auth-card #signup-form label:has(> input#phone-number) input#phone-number{display:block!important;width:100%!important;max-width:100%!important;min-width:0!important;height:48px!important;min-height:48px!important;padding:12px 14px!important;border:1px solid #d7deeb!important;border-radius:12px!important;background:#fff!important;color:#182033!important;font:inherit!important;line-height:1.4!important;box-sizing:border-box!important;appearance:none;-webkit-appearance:none}\n.auth-card #signup-form input[type="tel"] {appearance:none;-webkit-appearance:none;width:100%;height:48px;min-height:48px;padding:12px 14px;border:1px solid #d7deeb;border-radius:12px;font:inherit;box-sizing:border-box}
+.auth-card #signup-form label:has(> input#phone-number){display:block;width:100%;min-width:0}.auth-card #signup-form label:has(> input#phone-number) input#phone-number{display:block!important;width:100%!important;max-width:100%!important;min-width:0!important;height:48px!important;min-height:48px!important;padding:12px 14px!important;border:1px solid #d7deeb!important;border-radius:12px!important;background:#fff!important;color:#182033!important;font:inherit!important;line-height:1.4!important;box-sizing:border-box!important;appearance:none;-webkit-appearance:none}
+.auth-card #signup-form input[type="tel"] {appearance:none;-webkit-appearance:none;width:100%;height:48px;min-height:48px;padding:12px 14px;border:1px solid #d7deeb;border-radius:12px;font:inherit;box-sizing:border-box}
 .auth-card #signup-form input:focus-visible,.auth-card #signup-form select:focus-visible,.auth-card #verify-panel input:focus-visible{outline:3px solid rgba(35,91,222,.2);outline-offset:1px;border-color:#235BDE}
 .auth-card #signup-form input:invalid:not(:placeholder-shown){border-color:#d92d20}
-.auth-card #signup-form .signup-legal-copy{font-size:14px;line-height:1.6;margin:8px 0 18px;color:#475467}.auth-card #signup-form .signup-legal-copy a{color:#235BDE;text-decoration:underline}\n.auth-card #signup-form .check{display:flex;align-items:flex-start;gap:10px;line-height:1.55}
+.auth-card #signup-form .signup-legal-copy{font-size:14px;line-height:1.6;margin:8px 0 18px;color:#475467}.auth-card #signup-form .signup-legal-copy a{color:#235BDE;text-decoration:underline}
+.auth-card #signup-form .check{display:flex;align-items:flex-start;gap:10px;line-height:1.55}
 .auth-card #signup-form .check input[type="checkbox"]{flex:0 0 auto;width:17px;height:17px;margin-top:3px}
 .auth-card #marketing-consent-row[hidden]{display:none!important}
 .auth-card #form-message:empty{display:none}
+
+/* Signup page layout and native dropdown repair */
+.auth-shell{padding:52px 20px 64px!important;}
+.auth-shell .auth-card{width:min(520px,100%)!important;max-width:520px!important;padding:34px 36px!important;border-radius:24px!important;}
+.auth-card #signup-form{display:grid;gap:15px;width:100%;}
+.auth-card #signup-form label{display:grid;gap:7px;width:100%;min-width:0;}
+.auth-card #signup-form input:not([type="checkbox"]),
+.auth-card #signup-form select,
+.auth-card #verify-panel input{width:100%!important;max-width:100%!important;min-width:0!important;min-height:48px;box-sizing:border-box!important;}
+.auth-card #signup-form select{
+  display:block!important;height:50px!important;padding:12px 44px 12px 14px!important;
+  border:1px solid #d7deeb!important;border-radius:12px!important;background-color:#fff!important;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23475467' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")!important;
+  background-repeat:no-repeat!important;background-position:right 14px center!important;background-size:16px 16px!important;
+  appearance:none!important;-webkit-appearance:none!important;color:#182033!important;font:inherit!important;line-height:1.4!important;cursor:pointer;
+}
+.auth-card #signup-form select:focus-visible{outline:3px solid rgba(35,91,222,.2);outline-offset:1px;border-color:#235BDE!important;}
+.auth-card #signup-form input:focus-visible,.auth-card #verify-panel input:focus-visible{outline:3px solid rgba(35,91,222,.2);outline-offset:1px;border-color:#235BDE!important;}
+.auth-card #verify-panel{width:100%;min-width:0;}
+.auth-card #verify-panel button{width:100%;min-height:48px;box-sizing:border-box;}
+@media(max-width:600px){.auth-shell{padding:28px 14px 40px!important;}.auth-shell .auth-card{padding:26px 20px!important;border-radius:20px!important;}.auth-card h1{font-size:36px!important;}}
+
 </style>
 </head>
 <body class="auth-page">
