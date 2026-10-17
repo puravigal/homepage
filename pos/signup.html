@@ -6,7 +6,7 @@
 <meta name="description" content="Create your Puravigal POS account for billing, products, inventory and sales visibility.">
 <meta name="robots" content="noindex,follow">
 <link rel="canonical" href="https://www.puravigal.com/pos/signup.html">
-<link rel="icon" href="../images/fav/favicon.ico"><link rel="stylesheet" href="../css/site.css?v=20261017-signup-ui-2">
+<link rel="icon" href="../images/fav/favicon.ico"><link rel="stylesheet" href="../css/site.css?v=20261017-signup-ui-3">
 <style>
 /* Signup form control consistency and accessible validation */
 .auth-card #signup-form input:not([type="checkbox"]),
@@ -90,6 +90,19 @@
 .auth-card #signup-form .signup-legal-copy{white-space:normal;overflow-wrap:anywhere}
 @media(max-width:600px){.auth-card h1{font-size:34px!important}}
 
+
+/* Signup async-action progress feedback */
+.signup-loading-overlay{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;padding:20px;background:rgba(13,25,45,.34);backdrop-filter:blur(3px)}
+.signup-loading-card{display:flex;flex-direction:column;align-items:center;gap:12px;width:min(340px,100%);padding:28px 24px;border:1px solid #e5eaf4;border-radius:18px;background:#fff;box-shadow:0 24px 70px rgba(0,0,0,.18);text-align:center;color:#182033}
+.signup-loading-card strong{font-size:16px;line-height:1.4}
+.signup-loading-detail{font-size:13px;line-height:1.55;color:#667085}
+.signup-spinner{display:inline-block;width:16px;height:16px;flex:0 0 16px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:signup-spin .7s linear infinite;vertical-align:middle}
+.signup-spinner-large{width:32px;height:32px;flex-basis:32px;border-width:3px;color:#315efb}
+button[aria-busy="true"]{opacity:.88;cursor:wait}
+button[aria-busy="true"] .signup-spinner{margin-right:9px}
+@keyframes signup-spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.signup-spinner{animation-duration:1.6s}}
+
 </style>
 </head>
 <body class="pos-site auth-page"><div data-pos-header></div>
@@ -130,6 +143,27 @@
  email.addEventListener("input",()=>email.setCustomValidity(""));
  phone.addEventListener("input",()=>phone.setCustomValidity(""));
  phone.addEventListener("blur",()=>{const digits=phone.value.replace(/\D/g,"");phone.setCustomValidity(digits.length<6||digits.length>15?"Enter a valid phone number with 6–15 digits.":"");});
+ function setLoading(button,label){
+   if(button.dataset.loading==="1")return;
+   button.dataset.loading="1";
+   button.dataset.originalHtml=button.innerHTML;
+   button.disabled=true;
+   button.setAttribute("aria-busy","true");
+   button.innerHTML='<span class="signup-spinner" aria-hidden="true"></span><span>'+label+'</span>';
+   let overlay=document.getElementById("signup-loading-overlay");
+   if(!overlay){
+     overlay=document.createElement("div");overlay.id="signup-loading-overlay";overlay.className="signup-loading-overlay";
+     overlay.setAttribute("role","status");overlay.setAttribute("aria-live","polite");
+     overlay.innerHTML='<div class="signup-loading-card"><span class="signup-spinner signup-spinner-large" aria-hidden="true"></span><strong></strong><span class="signup-loading-detail">Please wait. This may take a few seconds.</span></div>';
+     document.body.appendChild(overlay);
+   }
+   overlay.querySelector("strong").textContent=label;
+ }
+ function clearLoading(button){
+   button.disabled=false;button.removeAttribute("aria-busy");button.dataset.loading="";
+   if(button.dataset.originalHtml!==undefined){button.innerHTML=button.dataset.originalHtml;delete button.dataset.originalHtml;}
+   document.getElementById("signup-loading-overlay")?.remove();
+ }
  function note(text,error){msg.textContent=text;msg.style.color=error?"#b42318":"#067647";}
  async function post(path,payload){const r=await fetch(API+path,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});const data=await r.json().catch(()=>({}));if(!r.ok)throw new Error((typeof data.error==="string"?data.error:data.error?.message)||data.message||"Something went wrong. Please try again.");return data;}
  form.addEventListener("submit",async e=>{e.preventDefault();
@@ -137,11 +171,11 @@
  if(!email.checkValidity()){email.reportValidity();return;}
  if(phoneDigits.length<6||phoneDigits.length>15){phone.setCustomValidity("Enter a valid phone number with 6–15 digits.");phone.reportValidity();return;}
  if(!form.reportValidity())return;
- submit.disabled=true;try{await post("/api/auth/product-signup",{product:"pos",fullName:document.getElementById("full-name").value.trim(),businessName:document.getElementById("business-name").value.trim(),businessType:document.getElementById("business-type").value,countryCode:document.getElementById("country-code").value,countryName:document.getElementById("country-code").selectedOptions[0].textContent,phoneNumber:phone.value.trim(),marketingConsent:document.getElementById("marketing-consent").checked,email:email.value.trim(),password:document.getElementById("password").value});form.hidden=true;verify.hidden=false;document.getElementById("form-title").textContent="Verify your email";document.getElementById("form-description").textContent="Enter the 6-digit verification code sent to "+email.value.trim()+".";note("Verification code sent. Check your inbox and spam folder.");}catch(err){note(err.message,true);}finally{submit.disabled=false;}});
- document.getElementById("verify-button").addEventListener("click",async()=>{const b=document.getElementById("verify-button");b.disabled=true;try{const result=await post("/api/auth/verify-email",{email:email.value.trim(),otp:document.getElementById("otp").value.trim(),password:document.getElementById("password").value,returnSession:true});
+ setLoading(submit,"Creating your account…");try{await post("/api/auth/product-signup",{product:"pos",fullName:document.getElementById("full-name").value.trim(),businessName:document.getElementById("business-name").value.trim(),businessType:document.getElementById("business-type").value,countryCode:document.getElementById("country-code").value,countryName:document.getElementById("country-code").selectedOptions[0].textContent,phoneNumber:phone.value.trim(),marketingConsent:document.getElementById("marketing-consent").checked,email:email.value.trim(),password:document.getElementById("password").value});form.hidden=true;verify.hidden=false;document.getElementById("form-title").textContent="Verify your email";document.getElementById("form-description").textContent="Enter the 6-digit verification code sent to "+email.value.trim()+".";note("Verification code sent. Check your inbox and spam folder.");}catch(err){note(err.message,true);}finally{clearLoading(submit);}});
+ document.getElementById("verify-button").addEventListener("click",async()=>{const b=document.getElementById("verify-button");setLoading(b,"Verifying your email…");try{const result=await post("/api/auth/verify-email",{email:email.value.trim(),otp:document.getElementById("otp").value.trim(),password:document.getElementById("password").value,returnSession:true});
  if(result.access_token){note("Email verified. Opening POS…");window.location.replace("https://pos.puravigal.com/sso/callback#account_access_token="+encodeURIComponent(result.access_token));}
- else {note("Email verified, but automatic sign-in is not configured. Please sign in once to continue.",true);window.location.replace("https://accounts.puravigal.com/?mode=signin&redirect_to=https%3A%2F%2Fpos.puravigal.com%2Fsso%2Fcallback");}}catch(err){note(err.message,true);}finally{b.disabled=false;}});
- document.getElementById("resend-button").addEventListener("click",async()=>{const b=document.getElementById("resend-button");b.disabled=true;try{await post("/api/auth/resend-verification",{email:email.value.trim()});note("If verification is still needed, a new code has been sent.");}catch(err){note(err.message,true);}finally{b.disabled=false;}});
+ else {note("Email verified, but automatic sign-in is not configured. Please sign in once to continue.",true);window.location.replace("https://accounts.puravigal.com/?mode=signin&redirect_to=https%3A%2F%2Fpos.puravigal.com%2Fsso%2Fcallback");}}catch(err){note(err.message,true);}finally{clearLoading(b);}});
+ document.getElementById("resend-button").addEventListener("click",async()=>{const b=document.getElementById("resend-button");setLoading(b,"Sending verification code…");try{await post("/api/auth/resend-verification",{email:email.value.trim()});note("If verification is still needed, a new code has been sent.");}catch(err){note(err.message,true);}finally{b.disabled=false;}});
 })();
 </script>
 </body></html>
