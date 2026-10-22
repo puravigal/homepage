@@ -31,11 +31,14 @@ Puravigal is being developed as a broader business software platform. Additional
 - https://www.puravigal.com/privacy-policy.html
 - https://www.puravigal.com/terms-and-conditions.html
 
-## Account
-- https://www.puravigal.com/login.html
-- https://www.puravigal.com/signup.html
-- https://www.puravigal.com/pos/login.html
-- https://www.puravigal.com/pos/signup.html
+## Account creation and sign-in
+- Main Puravigal account sign-up: https://www.puravigal.com/signup.html
+- Main account sign-in: https://www.puravigal.com/login.html
+- Puravigal POS sign-up: https://www.puravigal.com/pos/signup.html
+- Puravigal POS sign-in: https://www.puravigal.com/pos/login.html
+- Account creation supports email-based registration and Google sign-up where available.
+- POS registration collects business details needed to set up the POS account.
+- Sign-up and sign-in pages are transactional account flows, not public SEO landing pages; public product and feature pages are the preferred discovery resources.
 
 ## Contact
 sales@puravigal.com

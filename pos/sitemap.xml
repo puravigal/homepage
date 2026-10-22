@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://www.puravigal.com/pos/</loc></url>
+  <url><loc>https://www.puravigal.com/pos/</loc><lastmod>2026-10-22</lastmod></url>
   <url><loc>https://www.puravigal.com/pos/features.html</loc></url>
   <url><loc>https://www.puravigal.com/pos/pricing.html</loc></url>
   <url><loc>https://www.puravigal.com/pos/resources.html</loc></url>
@@ -14,4 +14,5 @@
   <url><loc>https://www.puravigal.com/pos/resources/choose-pos-software.html</loc></url>
   <url><loc>https://www.puravigal.com/pos/resources/retail-billing-inventory-checklist.html</loc></url>
   <url><loc>https://www.puravigal.com/pos/resources/restaurant-cafe-pos-checklist.html</loc></url>
+  <url><loc>https://www.puravigal.com/pos/signup.html</loc></url>
 </urlset>
